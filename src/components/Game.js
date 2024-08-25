@@ -8,7 +8,8 @@ function Game() {
 
   //Declaring a Winner
   useEffect(() => {
-    "Your code here";
+    const declareWinner = calculateWinner(squares);
+    setWinner(declareWinner);
   }, [squares]);
 
   //function to check if a player has won.
@@ -40,7 +41,17 @@ function Game() {
 
   //Handle player
   const handleClick = (i) => {
-    "Your code here";
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    const nextSquare = squares.slice();
+    if (xIsNext) {
+      nextSquare[i] = "X";
+    } else {
+      nextSquare[i] = "O";
+    }
+    setSquares(nextSquare);
+    setXIsNext(!xIsNext);
   };
 
   //Restart game
@@ -53,7 +64,7 @@ function Game() {
       <h2 className="result">Winner is: {winner ? winner : "N/N"}</h2>
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
-        <Board squares={"Your code here"} handleClick={"Your code here"} />
+        <Board squares={squares} handleClick={handleClick} />
       </div>
       <button onClick={"Your code here"} className="restart-btn">
         Restart
