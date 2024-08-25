@@ -3,10 +3,9 @@ import Board from "./Board";
 import History from "./History";
 
 function Game() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [history, setHistory] = useState([{ square: Array(9).fill(null) }]);
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
-  const [history, setHistory] = useState();
 
   //Declaring a Winner
   useEffect(() => {
@@ -61,6 +60,11 @@ function Game() {
     setXIsNext(!xIsNext);
   };
 
+  //Undo game
+  const jumpTo = (step) => {
+    setHistory(step);
+    setXIsNext(step % 2 === 0);
+  };
   //Restart game
   const handleRestart = () => {
     setSquares(Array(9).fill(null));
@@ -73,11 +77,11 @@ function Game() {
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
         <Board squares={squares} handleClick={handleClick} />
+        <History jumpTo={step} jumpTo={}/>
       </div>
       <button onClick={handleRestart} className="restart-btn">
         Restart
       </button>
-      <History />
     </div>
   );
 }

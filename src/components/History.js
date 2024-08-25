@@ -1,10 +1,9 @@
 import React from "react";
 
-function History({ history }) {
+function History({ history, jumpTo }) {
   return (
     <div>
-      History
-      <button>Go back to step #{history}</button>
+      <h4>History</h4>
     </div>
   );
 }
