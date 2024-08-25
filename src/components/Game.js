@@ -10,7 +10,7 @@ function Game() {
 
   //Declaring a Winner
   useEffect(() => {
-    const declareWinner = calculateWinner(history[history.length - 1]);
+    const declareWinner = calculateWinner(history[history.length - 1].squares);
     setWinner(declareWinner);
   }, [history]);
 
@@ -43,31 +43,36 @@ function Game() {
 
   //Handle player
   const handleClick = (i) => {
-    const squares = "";
-    const nextSquare = squares.slice();
+    const currentHistory = history.slice(0, stepNumber + 1);
+    const current = currentHistory[currentHistory.length - 1];
+    const squares = current.squares.slice();
 
     if (calculateWinner(squares) || squares[i]) {
       return;
     }
 
-    nextSquare[i] = xIsNext ? "X" : "O";
+    squares[i] = xIsNext ? "X" : "O";
 
-    // if (xIsNext) {
-    //   nextSquare[i] = "X";
-    // } else {
-    //   nextSquare[i] = "O";
-    // }
-
-    setXIsNext(!xIsNext);
+    setHistory(
+      currentHistory.concat([
+        {
+          squares: squares,
+        },
+      ])
+    );
+    setStepNumber(currentHistory.length);
+    setXIsNext((prevState) => !prevState);
   };
 
   //Undo game
   const jumpTo = (step) => {
-    setHistory(step);
+    setStepNumber(step);
     setXIsNext(step % 2 === 0);
   };
   //Restart game
   const handleRestart = () => {
+    setStepNumber(0);
+    setHistory([{ square: Array(9).fill(null) }]);
     setXIsNext(true);
   };
 
@@ -76,7 +81,10 @@ function Game() {
       <h2 className="result">Winner is: {winner ? winner : "N/N"}</h2>
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
-        <Board squares={history} handleClick={handleClick} />
+        <Board
+          squares={history[stepNumber].squares}
+          handleClick={handleClick}
+        />
         <History history={history} jumpTo={jumpTo} />
       </div>
       <button onClick={handleRestart} className="restart-btn">
