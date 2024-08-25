@@ -3,7 +3,11 @@ import Board from "./Board";
 import History from "./History";
 
 function Game() {
-  const [history, setHistory] = useState([{ square: Array(9).fill(null) }]);
+  const [history, setHistory] = useState([
+    {
+      squares: Array(9).fill(null),
+    },
+  ]);
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
   const [stepNumber, setStepNumber] = useState(0);
@@ -72,7 +76,11 @@ function Game() {
   //Restart game
   const handleRestart = () => {
     setStepNumber(0);
-    setHistory([{ square: Array(9).fill(null) }]);
+    setHistory([
+      {
+        squares: Array(9).fill(null),
+      },
+    ]);
     setXIsNext(true);
   };
 
