@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
+import History from "./History";
 
 function Game() {
   const [squares, setSquares] = useState(Array(9).fill(null));
@@ -76,6 +77,7 @@ function Game() {
       <button onClick={handleRestart} className="restart-btn">
         Restart
       </button>
+      <History />
     </div>
   );
 }
