@@ -6,10 +6,11 @@ function Game() {
   const [history, setHistory] = useState([{ square: Array(9).fill(null) }]);
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState(null);
+  const [stepNumber, setStepNumber] = useState(0);
 
   //Declaring a Winner
   useEffect(() => {
-    const declareWinner = calculateWinner(history);
+    const declareWinner = calculateWinner(history[history.length - 1]);
     setWinner(declareWinner);
   }, [history]);
 
@@ -76,7 +77,7 @@ function Game() {
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
         <Board squares={history} handleClick={handleClick} />
-        <History history={history} />
+        <History history={history} jumpTo={jumpTo} />
       </div>
       <button onClick={handleRestart} className="restart-btn">
         Restart

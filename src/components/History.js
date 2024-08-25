@@ -4,6 +4,16 @@ function History({ history, jumpTo }) {
   return (
     <div>
       <h4>History</h4>
+      <ul>
+        {history.map((step, move) => {
+          const desc = move ? "Go to move #" + move : "Go to game start";
+          return (
+            <li key={move}>
+              <button onClick={() => jumpTo(move)}>{desc}</button>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
