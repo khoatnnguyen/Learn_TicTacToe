@@ -9,9 +9,9 @@ function Game() {
 
   //Declaring a Winner
   useEffect(() => {
-    const declareWinner = calculateWinner(squares);
+    const declareWinner = calculateWinner(history);
     setWinner(declareWinner);
-  }, [squares]);
+  }, [history]);
 
   //function to check if a player has won.
   //If a player has won, we can display text such as “Winner: X” or “Winner: O”.
@@ -42,6 +42,7 @@ function Game() {
 
   //Handle player
   const handleClick = (i) => {
+    const squares = "";
     const nextSquare = squares.slice();
 
     if (calculateWinner(squares) || squares[i]) {
@@ -56,7 +57,6 @@ function Game() {
     //   nextSquare[i] = "O";
     // }
 
-    setSquares(nextSquare);
     setXIsNext(!xIsNext);
   };
 
@@ -67,7 +67,6 @@ function Game() {
   };
   //Restart game
   const handleRestart = () => {
-    setSquares(Array(9).fill(null));
     setXIsNext(true);
   };
 
@@ -76,8 +75,8 @@ function Game() {
       <h2 className="result">Winner is: {winner ? winner : "N/N"}</h2>
       <div className="game">
         <span className="player">Next player is: {xIsNext ? "X" : "O"}</span>
-        <Board squares={squares} handleClick={handleClick} />
-        <History jumpTo={step} jumpTo={}/>
+        <Board squares={history} handleClick={handleClick} />
+        <History history={history} />
       </div>
       <button onClick={handleRestart} className="restart-btn">
         Restart
